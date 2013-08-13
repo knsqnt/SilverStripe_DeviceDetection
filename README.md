@@ -16,3 +16,8 @@ Documentation
 -------------
 
 See docs/en/index.md for more informations.
+
+Author
+------
+
+[Mario Hofer](mailto:mario.hofer@knsqnt.com), [knsqnt interactive](http://www.knsqnt.com)

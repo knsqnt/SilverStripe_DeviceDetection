@@ -1,5 +1,5 @@
-SilverStripe_DeviceDetect Documentation
-=======================================
+Documentation
+=============
 
 Use the following functions to check what device the page will be delivered at:
 

@@ -30,10 +30,8 @@ These functions can either be used inside the page controller or the template fi
 
 **Controller**
 
-$this->PhoneDevice()
-$this->DeviceClass()
+$this->PhoneDevice(), $this->DeviceClass()
 
 **Template**
 
-$PhoneDevice
-$DeviceClass
+$PhoneDevice, $DeviceClass

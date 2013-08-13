@@ -4,93 +4,70 @@ require_once('Mobile_Detect.php');
 
 class DeviceDetectionExtension extends DataExtension {
 	
+	private $forceToDevice = false; // (bool) false or (string) phone, tablet, desktop
+	
 	// Phones only - without Tablets and Desktops
-	public function PhoneDevice($__forceTrue = false) {
+	public function PhoneDevice() {
 		
-		$_return = (bool) $__forceTrue;
+		$_detector = $this->getDetector();
 		
-		if(!$_return) {
-			
-			$_detector = $this->theDetectorClass();
-			$_return = $_detector->isMobile() && !$_detector->isTablet();
-			
-		}
-		
-		return $_return;
+		return $this->forceToDevice
+		? $this->forceToDevice == 'phone'
+		: $_detector->isMobile() && !$_detector->isTablet();
 		
 	}
 	
 	// Tablets only - without Phones and Desktops
-	public function TabletDevice($__forceTrue = false) {
+	public function TabletDevice() {
 		
-		$_return = (bool) $__forceTrue;
-		
-		if(!$_return) {
-			
-			$_detector = $this->theDetectorClass();
-			$_return = $_detector->isTablet();
-			
-		}
-		
-		return $_return;
+		return $this->forceToDevice
+		? $this->forceToDevice == 'tablet'
+		: $this->getDetector()->isTablet();
 		
 	}
 	
 	// Phones and Tablets - without Desktops
-	public function MobileDevice($__forceTrue = false) {
+	public function MobileDevice() {
 		
-		$_return = (bool) $__forceTrue;
-		
-		if(!$_return) {
-			
-			$_detector = $this->theDetectorClass();
-			$_return = $_detector->isMobile();
-			
-		}
-		
-		return $_return;
+		return $this->forceToDevice
+		? $this->forceToDevice == 'mobile'
+		: $this->getDetector()->isMobile();
 		
 	}
 	
 	// Desktop only - without Phones and Tablets
-	public function DesktopDevice($__forceTrue = false) {
+	public function DesktopDevice() {
 		
-		$_return = (bool) $__forceTrue;
-		
-		if(!$_return) {
-			
-			$_detector = $this->theDetectorClass();
-			$_return = !$_detector->isMobile();
-			
-		}
-		
-		return $_return;
+		return $this->forceToDevice
+		? $this->forceToDevice == 'desktop'
+		: !$this->getDetector()->isMobile();
 		
 	}
 	
 	public function DeviceClass() {
 		
-		$_return = '';
-		
-		if($this->MobileDevice()) {
+		if($this->PhoneDevice() && (!$this->forceToDevice || $this->forceToDevice == 'phone')) {
 			
-			$_return .= 'mobile';
+			return 'mobile phone';
 			
-			if($this->PhoneDevice()) $_return .= ' phone';
-			if($this->TabletDevice()) $_return .= ' tablet';
+		} else if($this->TabletDevice() && (!$this->forceToDevice || $this->forceToDevice == 'tablet')) {
 			
-		} else if($this->DesktopDevice()) {
+			return 'mobile tablet';
 			
-			$_return .= 'desktop';
+		} else if($this->DesktopDevice() && (!$this->forceToDevice || $this->forceToDevice == 'desktop')) {
+			
+			return 'desktop';
+			
+		} else {
+			
+			return false;
 			
 		}
-		
-		return $_return;
 		
 	}
 	
 	// in case the thirdparty class changes
-	private function theDetectorClass() {
+	private function getDetector() {
 		
 		return new Mobile_Detect();
 		

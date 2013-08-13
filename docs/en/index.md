@@ -19,4 +19,4 @@ $this->PhoneDevice()
 
 **Template**
 
-$PhoneDevice()
+$PhoneDevice

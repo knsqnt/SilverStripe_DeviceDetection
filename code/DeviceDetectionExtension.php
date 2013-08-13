@@ -37,7 +37,7 @@ class DeviceDetectionExtension extends DataExtension {
 	}
 	
 	// Phones and Tablets - without Desktops
-	public function MobileDevice() {
+	public function MobileDevice($__forceTrue = false) {
 		
 		$_return = (bool) $__forceTrue;
 		
@@ -53,7 +53,7 @@ class DeviceDetectionExtension extends DataExtension {
 	}
 	
 	// Desktop only - without Phones and Tablets
-	public function DesktopDevice() {
+	public function DesktopDevice($__forceTrue = false) {
 		
 		$_return = (bool) $__forceTrue;
 		
@@ -61,6 +61,27 @@ class DeviceDetectionExtension extends DataExtension {
 			
 			$_detector = $this->theDetectorClass();
 			$_return = !$_detector->isMobile();
+			
+		}
+		
+		return $_return;
+		
+	}
+	
+	public function DeviceClass() {
+		
+		$_return = '';
+		
+		if($this->MobileDevice()) {
+			
+			$_return .= 'mobile';
+			
+			if($this->PhoneDevice()) $_return .= ' phone';
+			if($this->TabletDevice()) $_return .= ' tablet';
+			
+		} else if($this->DesktopDevice()) {
+			
+			$_return .= 'desktop';
 			
 		}
 		

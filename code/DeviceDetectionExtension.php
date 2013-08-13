@@ -5,38 +5,73 @@ require_once('Mobile_Detect.php');
 class DeviceDetectionExtension extends DataExtension {
 	
 	// Phones only - without Tablets and Desktops
-	public function PhoneDevice() {
+	public function PhoneDevice($__forceTrue = false) {
 		
-		$_detect = new Mobile_Detect();
+		$_return = (bool) $__forceTrue;
 		
-		return $_detect->isMobile() && !$_detect->isTablet();
+		if(!$_return) {
+			
+			$_detector = $this->theDetectorClass();
+			$_return = $_detector->isMobile() && !$_detector->isTablet();
+			
+		}
+		
+		return $_return;
 		
 	}
 	
 	// Tablets only - without Phones and Desktops
-	public function TabletDevice() {
+	public function TabletDevice($__forceTrue = false) {
 		
-		$_detect = new Mobile_Detect();
+		$_return = (bool) $__forceTrue;
 		
-		return $_detect->isTablet();
+		if(!$_return) {
+			
+			$_detector = $this->theDetectorClass();
+			$_return = $_detector->isTablet();
+			
+		}
+		
+		return $_return;
 		
 	}
 	
 	// Phones and Tablets - without Desktops
 	public function MobileDevice() {
 		
-		$_detect = new Mobile_Detect();
+		$_return = (bool) $__forceTrue;
 		
-		return $_detect->isMobile();
+		if(!$_return) {
+			
+			$_detector = $this->theDetectorClass();
+			$_return = $_detector->isMobile();
+			
+		}
+		
+		return $_return;
 		
 	}
 	
 	// Desktop only - without Phones and Tablets
 	public function DesktopDevice() {
 		
-		$_detect = new Mobile_Detect();
+		$_return = (bool) $__forceTrue;
 		
-		return !$_detect->isMobile();
+		if(!$_return) {
+			
+			$_detector = $this->theDetectorClass();
+			$_return = !$_detector->isMobile();
+			
+		}
+		
+		return $_return;
+		
+	}
+	
+	// in case the thirdparty class changes
+	private function theDetectorClass() {
+		
+		return new Mobile_Detect();
 		
 	}
 	

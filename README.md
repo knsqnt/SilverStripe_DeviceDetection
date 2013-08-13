@@ -12,6 +12,11 @@ Requirements
 
 - SilverStripe 3.0
 
+Installation
+------------
+
+Download the .zip archive, copy the extracted folder to your project root and you're done.
+
 Documentation
 -------------
 

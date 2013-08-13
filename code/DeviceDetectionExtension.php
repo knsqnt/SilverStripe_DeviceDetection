@@ -34,7 +34,7 @@ class DeviceDetectionExtension extends DataExtension {
 	// Desktop only - without Phones and Tablets
 	public function DesktopDevice() {
 		
-		$_detect = new MobileDevice();
+		$_detect = new Mobile_Detect();
 		
 		return !$_detect->isMobile();
 		

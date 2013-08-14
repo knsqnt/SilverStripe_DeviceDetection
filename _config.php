@@ -2,8 +2,8 @@
 
 define('DEVICE_DETECTION_BASE', basename(dirname(__FILE__)));
 
-if(class_exists('SiteTree')) {
+if(class_exists('DataObject')) {
 	
-	SiteTree::add_extension('DeviceDetectionExtension');
+	DataObject::add_extension('DeviceDetectionExtension');
 	
 }

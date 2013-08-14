@@ -23,6 +23,8 @@ Use variable $forceToDevice inside DeviceDetectionExtension class to manually se
 
 When the variable is set to a device, each function will return the value accordings to this setting.
 
+To force using a device via GET parameter, just use ?forceToDevice={deviceName}. This will overwrite the class variable.
+
 Examples
 --------
 
@@ -35,3 +37,7 @@ $this->PhoneDevice(), $this->DeviceClass()
 **Template**
 
 $PhoneDevice, $DeviceClass
+
+**GET Parameter**
+
+?forceToDevice=phone, ?forceToDevice=0

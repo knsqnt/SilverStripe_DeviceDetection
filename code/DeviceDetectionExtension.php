@@ -4,16 +4,30 @@ require_once('Mobile_Detect.php');
 
 class DeviceDetectionExtension extends DataExtension {
 	
-	private $forceToDevice = false; // (bool) false or (string) phone, tablet, desktop
+	private $detector = null;
+	private $devices = array('phone', 'tablet', 'mobile', 'desktop');
+	private $forceToDevice = 'phone'; // (bool) false or (string) phone, tablet, desktop
+	
+	public function __construct() {
+		
+		parent::__construct();
+		
+		$this->detector = new Mobile_Detect();
+		
+		if(isset($_GET['forceToDevice']) && $_GET['forceToDevice'] != '') {
+			
+			$this->forceToDevice = in_array($_GET['forceToDevice'], $this->devices) ? $_GET['forceToDevice'] : false;
+			
+		}
+		
+	}
 	
 	// Phones only - without Tablets and Desktops
 	public function PhoneDevice() {
 		
-		$_detector = $this->getDetector();
-		
 		return $this->forceToDevice
 		? $this->forceToDevice == 'phone'
-		: $_detector->isMobile() && !$_detector->isTablet();
+		: $this->detector->isMobile() && !$this->detector->isTablet();
 		
 	}
 	
@@ -22,7 +36,7 @@ class DeviceDetectionExtension extends DataExtension {
 		
 		return $this->forceToDevice
 		? $this->forceToDevice == 'tablet'
-		: $this->getDetector()->isTablet();
+		: $this->detector->isTablet();
 		
 	}
 	
@@ -31,7 +45,7 @@ class DeviceDetectionExtension extends DataExtension {
 		
 		return $this->forceToDevice
 		? $this->forceToDevice == 'mobile'
-		: $this->getDetector()->isMobile();
+		: $this->detector->isMobile();
 		
 	}
 	
@@ -40,7 +54,7 @@ class DeviceDetectionExtension extends DataExtension {
 		
 		return $this->forceToDevice
 		? $this->forceToDevice == 'desktop'
-		: !$this->getDetector()->isMobile();
+		: !$this->detector->isMobile();
 		
 	}
 	
@@ -63,13 +77,6 @@ class DeviceDetectionExtension extends DataExtension {
 			return false;
 			
 		}
-		
-	}
-	
-	// in case the thirdparty class changes
-	private function getDetector() {
-		
-		return new Mobile_Detect();
 		
 	}
 	
